@@ -1,0 +1,248 @@
+<html>
+<head>
+  <title>Student Registration Form</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>STUDENT REGISTRATION FORM</h1>
+
+    <form id="regForm">
+      <table>
+        <tr>
+          <th>FIRST NAME:</th>
+          <td><input type="text" name="fname" required></td>
+        </tr>
+
+        <tr>
+          <th>LAST NAME:</th>
+          <td><input type="text" name="lname" required></td>
+        </tr>
+
+        <tr>
+          <th>EMAIL ID:</th>
+          <td><input type="text" name="email" placeholder="abcdefg@gmail.com" required></td>
+        </tr>
+
+        <tr>
+          <th>DOB</th>
+          <td><input type="date" name="dob" required></td>
+        </tr>
+
+        <tr>
+          <th>MOBILE NUMBER</th>
+          <td><input type="text" name="mobile" maxlength="10" placeholder="1234567890" required></td>
+        </tr>
+
+        <tr>
+          <th>GENDER</th>
+          <td>
+            <label><input type="radio" name="gender" value="male" required> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+          </td>
+        </tr>
+
+        <tr>
+          <th>ADDRESS</th>
+          <td><textarea name="addr" rows="2" placeholder="Address" required></textarea></td>
+        </tr>
+
+        <tr>
+          <th>CITY</th>
+          <td><input type="text" name="city" maxlength="30" placeholder="ABC Town" required></td>
+        </tr>
+
+        <tr>
+          <th>PIN CODE</th>
+          <td><input type="text" name="pin" maxlength="6" placeholder="6 digit number" required></td>
+        </tr>
+
+        <tr>
+          <th>STATE</th>
+          <td><input type="text" name="state" placeholder="Kerala" required></td>
+        </tr>
+
+        <tr>
+          <th>COUNTRY</th>
+          <td><input type="text" name="country" value="India" required></td>
+        </tr>
+
+        <tr>
+          <th>COURSE APPLIED FOR</th>
+          <td>
+            <label><input type="radio" name="course" value="BCA"> B.C.A</label>
+            <label><input type="radio" name="course" value="MTech"> M.Tech</label>
+            <label><input type="radio" name="course" value="MSc"> M.Sc</label>
+            <label><input type="radio" name="course" value="PhD"> Ph.D</label>
+          </td>
+        </tr>
+
+        <tr>
+          <th>PASSWORD</th>
+          <td><input type="password" name="pwd" maxlength="30" required placeholder="min 6 characters"></td>
+        </tr>
+
+        <tr>
+          <th>USERNAME</th>
+          <td><input type="text" name="uname" maxlength="10" required placeholder="10 characters"></td>
+        </tr>
+
+        <tr>
+          <th>Date of TC:</th>
+          <td><input type="date" name="tc_date" required></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit">SUBMIT</button>
+            <button type="reset">RESET</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("regForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // stop form submission
+
+      // get field values
+      const fname = this.fname.value.trim();
+      const lname = this.lname.value.trim();
+      const email = this.email.value.trim();
+      const dob = this.dob.value;
+      const mobile = this.mobile.value.trim();
+      const gender = this.gender.value;
+      const addr = this.addr.value.trim();
+      const city = this.city.value.trim();
+      const pin = this.pin.value.trim();
+      const state = this.state.value.trim();
+      const country = this.country.value.trim();
+      const pwd = this.pwd.value.trim();
+      const uname = this.uname.value.trim();
+      const tc_date = this.tc_date.value;
+
+      const namePattern = /^[A-Za-z]+$/;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // first name
+      if (fname === "" || !namePattern.test(fname)) {
+        alert("Enter a valid First Name (letters only)");
+        this.fname.focus();
+        return;
+      }
+
+      // last name
+      if (lname === "" || !namePattern.test(lname)) {
+        alert("Enter a valid Last Name (letters only)");
+        this.lname.focus();
+        return;
+      }
+
+      // email
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid Email ID");
+        this.email.focus();
+        return;
+      }
+
+      // dob
+      if (dob === "") {
+        alert("Select Date of Birth");
+        this.dob.focus();
+        return;
+      }
+
+      // mobile
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        alert("Enter a valid 10-digit Mobile Number");
+        this.mobile.focus();
+        return;
+      }
+
+      // gender
+      const genderSelected = document.querySelector('input[name="gender"]:checked');
+      if (!genderSelected) {
+        alert("Select Gender");
+        return;
+      }
+
+      // address
+      if (addr === "") {
+        alert("Enter Address");
+        this.addr.focus();
+        return;
+      }
+
+      // city
+      if (city === "" || !namePattern.test(city.replace(/\s/g, ""))) {
+        alert("Enter a valid City name (letters only)");
+        this.city.focus();
+        return;
+      }
+
+      // pin
+      if (pin.length !== 6 || isNaN(pin)) {
+        alert("Enter a valid 6-digit PIN Code");
+        this.pin.focus();
+        return;
+      }
+
+      // state
+      if (state === "" || !namePattern.test(state.replace(/\s/g, ""))) {
+        alert("Enter a valid State name (letters only)");
+        this.state.focus();
+        return;
+      }
+
+      // country
+      if (country === "" || !namePattern.test(country.replace(/\s/g, ""))) {
+        alert("Enter a valid Country name (letters only)");
+        this.country.focus();
+        return;
+      }
+
+      // course
+      const courseSelected = document.querySelector('input[name="course"]:checked');
+      if (!courseSelected) {
+        alert("Select a Course Applied For");
+        return;
+      }
+
+      // password
+      if (pwd.length < 6) {
+        alert("Password must be at least 6 characters");
+        this.pwd.focus();
+        return;
+      }
+
+      // username
+      if (uname === "" || uname.length < 3) {
+        alert("Enter a valid Username (min 3 characters)");
+        this.uname.focus();
+        return;
+      }
+
+      // TC date
+      if (tc_date === "") {
+        alert("Select Date of TC");
+        this.tc_date.focus();
+        return;
+      }
+
+      alert("✅ Form Submitted Successfully!");
+      this.submit(); // now allow submit
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Striped Table (Using ID Selector)</title>
+  <style>
+    body { 
+      font-family: sans-serif;   /* use sans-serif font */
+    }
+
+    /* Table styling using ID selector */
+    #studentTable {
+      width: 100%;               /* full width of page */
+      border-collapse: collapse; /* single border */
+    }
+
+    /* Table header */
+    #studentTable thead th {
+      padding: 20px 12px;
+      text-align: left;
+      color: white;
+      background-color: #b22222; /* dark firebrick red */
+      border: 1px solid grey;
+    }
+
+    /* Table data cells */
+    #studentTable td {
+      padding: 8px;
+      border: 1px solid grey;
+      color: #000000;
+    }
+
+    /* Even row background color */
+    #studentTable tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Hover effect */
+    #studentTable tr:hover {
+      background-color: burlywood;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student's Data</h1>
+
+  <table id="studentTable">
+    <thead>
+      <tr>
+        <th>Sl No</th>
+        <th>Admission No</th>
+        <th>Name</th>
+        <th>Email ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td><td>215214</td><td>Athul Krishna R</td><td>athul1296@gmail.com</td>
+      </tr>
+      <tr>
+        <td>2</td><td>215215</td><td>Musthafa</td><td>musthafa@gmail.com</td>
+      </tr>
+      <tr>
+        <td>3</td><td>215216</td><td>Safnas</td><td>safnas@gmail.com</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

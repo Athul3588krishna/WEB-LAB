@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Book Entry Form</title>
+</head>
+<body>
+  <h2>Enter Book Details</h2>
+  <form method="post" action="save_book.php">
+    <label>Book No:</label>
+    <input type="number" name="book_no" required><br><br>
+
+    <label>Title:</label>
+    <input type="text" name="title" required><br><br>
+
+    <label>Edition:</label>
+    <input type="text" name="edition"><br><br>
+
+    <label>Publisher:</label>
+    <input type="text" name="publisher"><br><br>
+
+    <input type="submit" value="Save Book">
+  </form>
+
+  <p><a href="list_books.php">View All Books</a></p>
+</body>
+</html>

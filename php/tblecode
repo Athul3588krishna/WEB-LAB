@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS book_details (
+  book_no INT PRIMARY KEY,
+  title VARCHAR(150) NOT NULL,
+  edition VARCHAR(40),
+  publisher VARCHAR(120)
+);
+
+optional
+INSERT INTO book_details (book_no, title, edition, publisher)
+VALUES
+(1, 'C Programming', '2nd', 'Pearson'),
+(2, 'Database Systems', '1st', 'McGraw Hill');

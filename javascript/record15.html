@@ -1,94 +1,30 @@
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Student Registration Form</title>
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    h1 {
-      margin: 10px 0;
-      font-size: 32px;
-    }
-
-    table {
-      width: 100%;
-      border: 1px solid #000;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      text-transform: uppercase;
-      width: 220px;
-    }
-
-    input,
-    textarea {
-      width: 260px;
-      padding: 6px;
-      border: 1px solid #999;
-      box-sizing: border-box;
-    }
-
-    input[type=radio],
-    input[type=checkbox] {
-      width: auto;
-      margin-right: 4px;
-    }
-
-    .inner {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .inner th,
-    .inner td {
-      border: 1px solid #000;
-      padding: 6px;
-    }
-
-    .inner th {
-      background: #f4f4f4;
-    }
-
+    body { font-family: Arial, Helvetica, sans-serif; }
+    h1 { margin: 10px 0; font-size: 32px; }
+    table { width: 100%; border: 1px solid #000; border-collapse: collapse; }
+    th, td { border: 1px solid #000; padding: 8px; text-align: left; vertical-align: top; }
+    th { text-transform: uppercase; width: 220px; }
+    input, textarea { width: 260px; padding: 6px; border: 1px solid #999; box-sizing: border-box; }
+    input[type=radio], input[type=checkbox] { width: auto; margin-right: 4px; }
+    .inner { width: 100%; border-collapse: collapse; }
+    .inner th, .inner td { border: 1px solid #000; padding: 6px; }
+    .inner th { background: #f4f4f4; }
     /* Red border when invalid, green when valid */
-    .invalid {
-      border: 2px solid #d93025 !important;
-      background: #fffafa;
-    }
-
-    .valid {
-      border: 2px solid #2e7d32 !important;
-      background: #f6fff7;
-    }
-
-    .msg {
-      font-size: 12px;
-      min-height: 14px;
-      margin-top: 2px;
-    }
-
-    .msg.error {
-      color: #d93025;
-    }
-
-    .msg.ok {
-      color: #2e7d32;
-    }
+    .invalid { border: 2px solid #d93025 !important; background: #fffafa; }
+    .valid { border: 2px solid #2e7d32 !important; background: #f6fff7; }
+    .msg { font-size: 12px; min-height: 14px; margin-top: 2px; }
+    .msg.error { color: #d93025; }
+    .msg.ok { color: #2e7d32; }
+    .actions { display: flex; gap: 10px; align-items: center; }
+    .hint { font-size: 12px; color: #666; }
+    button[disabled] { opacity: 0.6; cursor: not-allowed; }
   </style>
 </head>
-
 <body>
   <h1>STUDENT REGISTRATION FORM</h1>
 
@@ -97,7 +33,7 @@
       <tr>
         <th>FIRST NAME:</th>
         <td>
-          <input type="text" name="fname" required pattern="[A-Za-z ]+">
+          <input type="text" name="fname" required minlength="2" pattern="[A-Za-z ]+">
           <div class="msg"></div>
         </td>
       </tr>
@@ -105,7 +41,7 @@
       <tr>
         <th>LAST NAME:</th>
         <td>
-          <input type="text" name="lname" required pattern="[A-Za-z ]+">
+          <input type="text" name="lname" required minlength="2" pattern="[A-Za-z ]+">
           <div class="msg"></div>
         </td>
       </tr>
@@ -129,8 +65,15 @@
       <tr>
         <th>MOBILE NUMBER:</th>
         <td>
-          <input type="text" name="mobile" maxlength="10" required placeholder="1234567890"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+          <input
+            type="text"
+            name="mobile"
+            maxlength="10"
+            inputmode="numeric"
+            required
+            placeholder="10-digit Indian number"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          >
           <div class="msg"></div>
         </td>
       </tr>
@@ -138,15 +81,16 @@
       <tr>
         <th>GENDER:</th>
         <td>
-          <label><input type="radio" name="gender" required> Male</label>
-          <label><input type="radio" name="gender"> Female</label>
+          <label><input type="radio" name="gender" value="Male" required> Male</label>
+          <label><input type="radio" name="gender" value="Female"> Female</label>
+          <div class="msg" id="genderMsg"></div>
         </td>
       </tr>
 
       <tr>
         <th>ADDRESS:</th>
         <td>
-          <textarea name="addr" rows="2" required></textarea>
+          <textarea name="addr" rows="2" required minlength="5"></textarea>
           <div class="msg"></div>
         </td>
       </tr>
@@ -154,7 +98,7 @@
       <tr>
         <th>CITY:</th>
         <td>
-          <input type="text" name="city" maxlength="30" required pattern="[A-Za-z ]+">
+          <input type="text" name="city" maxlength="30" required minlength="2" pattern="[A-Za-z ]+">
           <div class="msg"></div>
         </td>
       </tr>
@@ -162,8 +106,15 @@
       <tr>
         <th>PIN CODE:</th>
         <td>
-          <input type="text" name="pin" maxlength="6" required placeholder="6 digits"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+          <input
+            type="text"
+            name="pin"
+            maxlength="6"
+            inputmode="numeric"
+            required
+            placeholder="6 digits"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          >
           <div class="msg"></div>
         </td>
       </tr>
@@ -171,7 +122,7 @@
       <tr>
         <th>STATE:</th>
         <td>
-          <input type="text" name="state" required pattern="[A-Za-z ]+">
+          <input type="text" name="state" required minlength="2" pattern="[A-Za-z ]+">
           <div class="msg"></div>
         </td>
       </tr>
@@ -187,7 +138,7 @@
       <tr>
         <th>QUALIFICATION:</th>
         <td>
-          <table class="inner">
+          <table class="inner" id="qualTable">
             <tr>
               <th>SL NO</th>
               <th>EXAM</th>
@@ -198,52 +149,76 @@
             <tr>
               <td>1</td>
               <td>Class X</td>
-              <td><input type="text" required pattern="[A-Za-z ]+">
+              <td>
+                <input type="text" required pattern="[A-Za-z ]+">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+              <td>
+                <input type="text" required inputmode="decimal"
+                  placeholder="0 – 100"
+                  oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+              <td>
+                <input type="text" required maxlength="4" inputmode="numeric"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                 <div class="msg"></div>
               </td>
             </tr>
             <tr>
               <td>2</td>
               <td>Class XII</td>
-              <td><input type="text" required pattern="[A-Za-z ]+">
+              <td>
+                <input type="text" required pattern="[A-Za-z ]+">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+              <td>
+                <input type="text" required inputmode="decimal"
+                  placeholder="0 – 100"
+                  oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+              <td>
+                <input type="text" required maxlength="4" inputmode="numeric"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                 <div class="msg"></div>
               </td>
             </tr>
             <tr>
               <td>3</td>
               <td>Degree</td>
-              <td><input type="text" required pattern="[A-Za-z ]+">
+              <td>
+                <input type="text" required pattern="[A-Za-z ]+">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+              <td>
+                <input type="text" required inputmode="decimal"
+                  placeholder="0 – 100"
+                  oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+              <td>
+                <input type="text" required maxlength="4" inputmode="numeric"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                 <div class="msg"></div>
               </td>
             </tr>
             <tr>
               <td>4</td>
               <td>Masters</td>
-              <td><input type="text" pattern="[A-Za-z ]+">
+              <td>
+                <input type="text" pattern="[A-Za-z ]+">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+              <td>
+                <input type="text" inputmode="decimal"
+                  placeholder="0 – 100"
+                  oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
                 <div class="msg"></div>
               </td>
-              <td><input type="text" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+              <td>
+                <input type="text" maxlength="4" inputmode="numeric"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                 <div class="msg"></div>
               </td>
             </tr>
@@ -253,58 +228,238 @@
 
       <tr>
         <th>PASSWORD:</th>
-        <td><input type="password" name="pwd" required minlength="6" maxlength="30">
+        <td>
+          <input type="password" name="pwd" required minlength="8" maxlength="30"
+                 placeholder="Min 8 chars with Aa1@">
           <div class="msg"></div>
+          <div class="hint">Password must include uppercase, lowercase, digit, and special character.</div>
         </td>
       </tr>
 
       <tr>
         <th>USERNAME:</th>
-        <td><input type="text" name="uname" required minlength="3" maxlength="10" pattern="[A-Za-z0-9]+">
+        <td>
+          <input type="text" name="uname" required minlength="3" maxlength="10" pattern="[A-Za-z0-9]+">
           <div class="msg"></div>
+          <div class="hint">3–10 letters or digits, no spaces.</div>
         </td>
       </tr>
 
       <tr>
         <th>DATE OF TC:</th>
-        <td><input type="date" name="tc_date" required>
+        <td>
+          <input type="date" name="tc_date" required>
           <div class="msg"></div>
         </td>
       </tr>
 
       <tr>
         <td></td>
-        <td>
-          <button type="submit">SUBMIT</button>
-          <button type="reset">RESET</button>
+        <td class="actions">
+          <button type="submit" id="submitBtn" disabled>SUBMIT</button>
+          <button type="reset" id="resetBtn">RESET</button>
+          <span class="hint" id="formHint">Fill all fields correctly to enable Submit.</span>
         </td>
       </tr>
     </table>
   </form>
 
   <script>
-    document.querySelectorAll('input, textarea').forEach(inp => {
-      const msg = inp.parentElement.querySelector('.msg');
-      inp.addEventListener('input', () => {
-        if (inp.checkValidity()) {
-          inp.classList.add('valid'); inp.classList.remove('invalid');
-          if (msg) { msg.textContent = '✔ Looks good'; msg.className = 'msg ok'; }
-        } else {
-          inp.classList.add('invalid'); inp.classList.remove('valid');
-          if (msg) {
-            let text = '❌ Invalid input';
-            if (inp.type === 'email') text = 'Enter a valid email address';
-            else if (inp.name === 'mobile') text = 'Enter 10 digits only';
-            else if (inp.name === 'pin') text = 'Enter 6 digits only';
-            else if (inp.pattern && inp.pattern.includes('[A-Za-z')) text = 'Letters only';
-            else if (inp.type === 'password') text = 'At least 6 characters';
-            msg.textContent = text;
-            msg.className = 'msg error';
-          }
-        }
-      });
+    // ---------- helpers ----------
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+    const setMsg = (el, ok, text) => {
+      const msg = el?.parentElement?.querySelector('.msg');
+      if (!msg) return;
+      msg.textContent = text || (ok ? '✔ Looks good' : '❌ Invalid input');
+      msg.className = 'msg ' + (ok ? 'ok' : 'error');
+      el.classList.toggle('valid', !!ok);
+      el.classList.toggle('invalid', !ok);
+    };
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const form = $('#regForm');
+    const submitBtn = $('#submitBtn');
+    const genderMsg = $('#genderMsg');
+
+    // Set max for dates (no future)
+    const dob = $('input[name="dob"]');
+    const tcDate = $('input[name="tc_date"]');
+    [dob, tcDate].forEach(d => d.max = todayStr);
+
+    // Tag qualification inputs with roles for simpler validation
+    const qualTable = $('#qualTable');
+    // For each non-header row (index > 0)
+    [...qualTable.rows].slice(1).forEach(row => {
+      const cells = row.cells;
+      // cells[2]=BOARD, cells[3]=PERCENTAGE, cells[4]=YEAR
+      cells[2].querySelector('input')?.setAttribute('data-role', 'board');
+      cells[3].querySelector('input')?.setAttribute('data-role', 'percent');
+      cells[4].querySelector('input')?.setAttribute('data-role', 'year');
+    });
+
+    // ---------- validation rules ----------
+    const rules = {
+      nameLike: v => /^[A-Za-z ]{2,}$/.test(v.trim()),
+      email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+      mobileIN: v => /^[6-9]\d{9}$/.test(v), // Indian pattern
+      pin: v => /^\d{6}$/.test(v),
+      percent: v => {
+        if (!/^\d{1,3}(\.\d{1,2})?$/.test(v)) return false;
+        const n = parseFloat(v);
+        return n >= 0 && n <= 100;
+      },
+      year: v => {
+        if (!/^\d{4}$/.test(v)) return false;
+        const y = +v, now = new Date().getFullYear();
+        return y >= 1900 && y <= now;
+      },
+      pastOrToday: v => {
+        if (!v) return false;
+        return v <= todayStr;
+      },
+      password: v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,30}$/.test(v),
+      username: v => /^[A-Za-z0-9]{3,10}$/.test(v),
+      minLen: (v, n) => (v || '').trim().length >= n
+    };
+
+    function validateField(inp) {
+      const name = inp.name || '';
+      const val = (inp.value || '').trim();
+
+      // built-in first
+      if (inp.type === 'date' && !rules.pastOrToday(val)) {
+        setMsg(inp, false, 'Date cannot be in the future');
+        return false;
+      }
+
+      if (name === 'fname' || name === 'lname' || name === 'city' || name === 'state' || name === 'country') {
+        const ok = rules.nameLike(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Letters only (min 2)');
+        return ok;
+      }
+
+      if (name === 'email') {
+        const ok = rules.email(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Enter a valid email address');
+        return ok;
+      }
+
+      if (name === 'mobile') {
+        const ok = rules.mobileIN(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Enter 10 digits starting with 6-9');
+        return ok;
+      }
+
+      if (name === 'pin') {
+        const ok = rules.pin(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Enter 6 digits only');
+        return ok;
+      }
+
+      if (name === 'dob' || name === 'tc_date') {
+        const ok = rules.pastOrToday(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Date cannot be in the future');
+        return ok;
+      }
+
+      if (name === 'pwd') {
+        const ok = rules.password(val);
+        setMsg(inp, ok, ok ? 'Strong password' : 'Use Aa1@ and 8–30 chars');
+        return ok;
+      }
+
+      if (name === 'uname') {
+        const ok = rules.username(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : '3–10 letters/digits only');
+        return ok;
+      }
+
+      if (name === 'addr') {
+        const ok = rules.minLen(val, 5);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Enter at least 5 characters');
+        return ok;
+      }
+
+      // Qualification table role-based
+      const role = inp.getAttribute('data-role');
+      if (role === 'board') {
+        const ok = rules.nameLike(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Letters only');
+        return ok;
+      }
+      if (role === 'percent') {
+        const ok = rules.percent(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : '0–100, up to 2 decimals');
+        return ok;
+      }
+      if (role === 'year') {
+        const ok = rules.year(val);
+        setMsg(inp, ok, ok ? '✔ Looks good' : 'Year between 1900 and current');
+        return ok;
+      }
+
+      // fallback to required/valid
+      const ok = inp.checkValidity();
+      setMsg(inp, ok);
+      return ok;
+    }
+
+    function validateGender() {
+      const anyChecked = $$('input[name="gender"]').some(r => r.checked);
+      genderMsg.textContent = anyChecked ? '✔ Looks good' : 'Please select your gender';
+      genderMsg.className = 'msg ' + (anyChecked ? 'ok' : 'error');
+      return anyChecked;
+    }
+
+    function formIsValid() {
+      // validate all inputs/textareas
+      const inputs = $$('input, textarea').filter(el => el.type !== 'radio'); // radios handled separately
+      const fieldsOk = inputs.every(el => validateField(el));
+      const genderOk = validateGender();
+      return fieldsOk && genderOk;
+    }
+
+    function updateSubmitState() {
+      const ok = formIsValid();
+      submitBtn.disabled = !ok;
+      $('#formHint').textContent = ok ? '✅ Ready to submit' : 'Fill all fields correctly to enable Submit.';
+    }
+
+    // attach listeners
+    $$('input, textarea').forEach(inp => {
+      if (inp.type === 'radio') {
+        inp.addEventListener('change', () => { validateGender(); updateSubmitState(); });
+      } else {
+        inp.addEventListener('input', () => { validateField(inp); updateSubmitState(); });
+        inp.addEventListener('blur',  () => { validateField(inp); updateSubmitState(); });
+      }
+    });
+
+    // initial run
+    updateSubmitState();
+
+    // submit handler
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (formIsValid()) {
+        alert('Form submitted successfully ✅');
+        // here you can actually submit with fetch/AJAX if needed
+        // fetch('/submit', {method:'POST', body: new FormData(form)})
+      } else {
+        alert('Please correct the highlighted fields ❌');
+      }
+    });
+
+    // reset handler
+    $('#resetBtn').addEventListener('click', () => {
+      setTimeout(() => {
+        $$('input, textarea').forEach(el => { el.classList.remove('valid','invalid'); setMsg(el, true, ''); });
+        genderMsg.textContent = '';
+        updateSubmitState();
+      }, 0);
     });
   </script>
 </body>
-
 </html>

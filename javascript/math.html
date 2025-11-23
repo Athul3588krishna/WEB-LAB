@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Student Registration Form (Reduced + Validation)</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:10px}
+    h1{font-size:20px;margin-bottom:8px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:6px;text-align:left;vertical-align:top}
+    th{width:160px}
+    input,textarea,select{width:260px;padding:6px;border:1px solid #999;box-sizing:border-box}
+    .msg{font-size:12px;margin-top:4px;min-height:14px}
+    .msg.error{color:#d93025}
+    .msg.ok{color:#2e7d32}
+    .valid{border:2px solid #2e7d32!important;background:#f6fff7}
+    .invalid{border:2px solid #d93025!important;background:#fff6f6}
+    button[disabled]{opacity:.6;cursor:not-allowed}
+  </style>
+</head>
+<body>
+  <h1>STUDENT REGISTRATION FORM</h1>
+
+  <form id="frm" novalidate>
+    <table>
+      <tr>
+        <th>First Name:</th>
+        <td>
+          <input id="fname" name="fname" type="text" required>
+          <div id="fnameMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Last Name:</th>
+        <td>
+          <input id="lname" name="lname" type="text" required>
+          <div id="lnameMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Email:</th>
+        <td>
+          <input id="email" name="email" type="email" required placeholder="abc@gmail.com">
+          <div id="emailMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Date of Birth:</th>
+        <td>
+          <input id="dob" name="dob" type="date" required>
+          <div id="dobMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Mobile:</th>
+        <td>
+          <input id="mobile" name="mobile" type="text" maxlength="10" inputmode="numeric" placeholder="10-digit number" required>
+          <div id="mobileMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Gender:</th>
+        <td>
+          <label><input type="radio" name="gender" value="Male" required> Male</label>
+          <label><input type="radio" name="gender" value="Female"> Female</label>
+          <label><input type="radio" name="gender" value="Other"> Other</label>
+          <div id="genderMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Address:</th>
+        <td>
+          <textarea id="addr" name="addr" rows="2" required></textarea>
+          <div id="addrMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Username:</th>
+        <td>
+          <input id="uname" name="uname" type="text" required>
+          <div id="unameMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Password:</th>
+        <td>
+          <input id="pwd" name="pwd" type="password" required placeholder="Min 8 chars">
+          <div id="pwdMsg" class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <button id="submitBtn" type="submit" disabled>Submit</button>
+          <button type="reset" id="resetBtn">Reset</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    // helpers
+    const $ = id => document.getElementById(id);
+    const today = new Date().toISOString().split('T')[0];
+
+    // rules
+    const rules = {
+      name: v => /^[A-Za-z ]{2,}$/.test(v.trim()),
+      email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+      dob: v => !!v && v <= today,
+      mobile: v => /^[6-9]\d{9}$/.test(v),
+      addr: v => v.trim().length >= 5,
+      uname: v => /^[A-Za-z0-9]{3,10}$/.test(v),
+      pwd: v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(v) // min8, at least one upper, one lower, one digit
+    };
+
+    // elements
+    const elems = {
+      fname: $('fname'), lname: $('lname'), email: $('email'), dob: $('dob'),
+      mobile: $('mobile'), addr: $('addr'), uname: $('uname'), pwd: $('pwd'),
+      submitBtn: $('submitBtn'), genderMsg: $('genderMsg')
+    };
+
+    // set max dob
+    elems.dob.max = today;
+
+    function setMsg(el, ok, text){
+      const msg = $(el.id + 'Msg');
+      msg.textContent = text || (ok ? 'Looks good' : 'Invalid');
+      msg.className = 'msg ' + (ok ? 'ok' : 'error');
+      el.classList.toggle('valid', ok);
+      el.classList.toggle('invalid', !ok);
+    }
+
+    function validateField(el){
+      const v = (el.value || '').trim();
+      let ok = true, txt = '';
+      if(el.id === 'fname' || el.id === 'lname') {
+        ok = rules.name(v);
+        txt = ok ? '✔' : 'Enter at least 2 letters (A–Z)';
+      } else if(el.id === 'email') {
+        ok = rules.email(v);
+        txt = ok ? '✔' : 'Enter valid email';
+      } else if(el.id === 'dob') {
+        ok = rules.dob(v);
+        txt = ok ? '✔' : 'DOB cannot be future';
+      } else if(el.id === 'mobile') {
+        // keep digits only while typing
+        el.value = el.value.replace(/[^0-9]/g,'');
+        ok = rules.mobile(el.value);
+        txt = ok ? '✔' : 'Enter 10 digits starting 6-9';
+      } else if(el.id === 'addr') {
+        ok = rules.addr(v);
+        txt = ok ? '✔' : 'Min 5 characters';
+      } else if(el.id === 'uname') {
+        ok = rules.uname(v);
+        txt = ok ? '✔' : '3–10 letters or digits';
+      } else if(el.id === 'pwd') {
+        ok = rules.pwd(v);
+        txt = ok ? 'Strong' : 'Min8, include upper, lower, digit';
+      }
+      setMsg(el, ok, txt);
+      return ok;
+    }
+
+    function validateGender(){
+      const any = Array.from(document.getElementsByName('gender')).some(r => r.checked);
+      $('genderMsg').textContent = any ? '✔' : 'Select gender';
+      $('genderMsg').className = 'msg ' + (any ? 'ok' : 'error');
+      return any;
+    }
+
+    function formIsValid(){
+      const fields = ['fname','lname','email','dob','mobile','addr','uname','pwd'];
+      const allOk = fields.every(id => validateField($(id)));
+      const genderOk = validateGender();
+      return allOk && genderOk;
+    }
+
+    // attach listeners
+    ['fname','lname','email','dob','mobile','addr','uname','pwd'].forEach(id => {
+      const el = $(id);
+      el.addEventListener('input', () => { validateField(el); updateSubmit(); });
+      el.addEventListener('blur',  () => { validateField(el); updateSubmit(); });
+    });
+
+    Array.from(document.getElementsByName('gender')).forEach(r => {
+      r.addEventListener('change', () => { validateGender(); updateSubmit(); });
+    });
+
+    function updateSubmit(){
+      elems.submitBtn.disabled = !formIsValid();
+    }
+
+    // form handlers
+    document.getElementById('frm').addEventListener('submit', e => {
+      e.preventDefault();
+      if(formIsValid()){
+        alert('Form submitted successfully ✔');
+        // here you can send form data to server
+      } else {
+        alert('Please correct the fields highlighted ❌');
+      }
+    });
+
+    $('resetBtn').addEventListener('click', () => {
+      setTimeout(() => {
+        ['fname','lname','email','dob','mobile','addr','uname','pwd'].forEach(id => {
+          const el = $(id);
+          el.classList.remove('valid','invalid');
+          $(id + 'Msg').textContent = '';
+          $(id + 'Msg').className = 'msg';
+        });
+        $('genderMsg').textContent = '';
+        elems.submitBtn.disabled = true;
+      }, 0);
+    });
+
+    // initial disable state
+    updateSubmit();
+  </script>
+</body>
+</html>

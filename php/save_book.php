@@ -20,5 +20,5 @@ if ($book_no && $title != '') {
     }
     $stmt->close();
 } else {
-    echo "<p style='color:red;'>Please fill all required fields.</p>";
+    echo "<p style='color:red;'>Please fill all required details.</p>";
 }

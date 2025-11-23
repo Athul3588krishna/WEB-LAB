@@ -1,152 +1,93 @@
 <?php
-/* employee.php — Single-file: add employee, list, delete */
-session_start();
+// Database connection settings
+$servername = "localhost";
+$username = "root";     // default username
+$password = "";         // default password
+$dbname = "employee";
 
-/* ===== DB CONFIG ===== */
-$host = 'localhost';
-$db   = 'demo_company';
-$user = 'root';
-$pass = ''; // XAMPP default; change if needed
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-try {
-  $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-  ]);
-} catch (Exception $e) {
-  die("DB connection failed");
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-/* ===== DELETE (optional) ===== */
-$msg = '';
-if (isset($_GET['delete'])) {
-  $id = (int)$_GET['delete'];
-  $pdo->prepare("DELETE FROM employees WHERE id=?")->execute([$id]);
-  $msg = "Employee deleted.";
-}
+// Insert employee details if form is submitted
+if (isset($_POST['submit'])) {
+    $emp_id = $_POST['emp_id'];
+    $name = $_POST['name'];
+    $designation = $_POST['designation'];
+    $salary = $_POST['salary'];
 
-/* ===== INSERT ===== */
-if ($_SERVER['REQUEST_METHOD']==='POST') {
-  $empid  = trim($_POST['emp_id'] ?? '');
-  $name   = trim($_POST['name'] ?? '');
-  $dept   = trim($_POST['dept'] ?? '');
-  $salary = trim($_POST['salary'] ?? '');
+    // Check if emp_id already exists
+    $check = $conn->query("SELECT * FROM employeess WHERE emp_id = '$emp_id'");
+    if ($check->num_rows > 0) {
+        echo "<p style='color:red;'>Employee ID already exists! Please use a different ID.</p>";
+    } else {
+        $sql = "INSERT INTO employeess (emp_id, name, designation, salary)
+                VALUES ('$emp_id', '$name', '$designation', '$salary')";
 
-  if ($empid==='' || $name==='' || $dept==='' || $salary==='') {
-    $msg = "All fields are required.";
-  } elseif (!is_numeric($salary)) {
-    $msg = "Salary must be a number.";
-  } else {
-    try {
-      $stmt = $pdo->prepare("INSERT INTO employees(emp_id,name,dept,salary) VALUES (?,?,?,?)");
-      $stmt->execute([$empid, $name, $dept, $salary]);
-      $msg = "Employee saved successfully.";
-    } catch (PDOException $e) {
-      if ($e->getCode()==='23000') $msg = "Duplicate EmpID. Use a different EmpID.";
-      else $msg = "Insert failed.";
+        if ($conn->query($sql) === TRUE) {
+            echo "<p style='color:green;'>New employee added successfully!</p>";
+        } else {
+            echo "<p style='color:red;'>Error: " . $conn->error . "</p>";
+        }
     }
-  }
 }
-
-/* ===== FETCH ALL ===== */
-$list = $pdo->query("SELECT * FROM employees ORDER BY id DESC")->fetchAll();
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Employee – Add & Display (Single file)</title>
-<style>
-  body{font-family:Arial,Helvetica,sans-serif;max-width:900px;margin:30px auto}
-  .wrap{display:grid;grid-template-columns:1fr 2fr;gap:20px}
-  form, table{border:1px solid #ccc;border-radius:10px}
-  form{padding:16px}
-  input,select{width:100%;padding:9px;margin:8px 0}
-  table{width:100%;border-collapse:collapse;overflow:hidden}
-  th,td{padding:10px;border-top:1px solid #eee}
-  th{background:#f7f7f7;text-align:left}
-  .msg{margin-bottom:12px;padding:10px;border-radius:8px}
-  .ok{background:#e8ffef;border:1px solid #b1ffd1;color:#0a7c3b}
-  .bad{background:#ffe8e8;border:1px solid #ffb1b1;color:#970000}
-  a.btn{padding:6px 10px;border:1px solid #ccc;border-radius:8px;text-decoration:none}
-</style>
+    <title>Employee Management</title>
 </head>
 <body>
+    <h2>Add Employee</h2>
+    <form method="POST" action="">
+        <label>Employee ID:</label><br>
+        <input type="number" name="emp_id" required><br><br>
 
-<h2>Employee – Add & Display</h2>
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
 
-<?php if ($msg): ?>
-  <div class="msg <?= (strpos($msg,'success')!==false)?'ok':'bad' ?>">
-    <?= htmlspecialchars($msg) ?>
-  </div>
-<?php endif; ?>
+        <label>Designation:</label><br>
+        <input type="text" name="designation" required><br><br>
 
-<div class="wrap">
-  <!-- LEFT: ADD FORM -->
-  <div>
-    <h3>Add Employee</h3>
-    <form method="post" autocomplete="off">
-      <label>EmpID</label>
-      <input type="text" name="emp_id" required>
+        <label>Salary:</label><br>
+        <input type="number" step="0.01" name="salary" required><br><br>
 
-      <label>Name</label>
-      <input type="text" name="name" required>
-
-      <label>Department</label>
-      <input type="text" name="dept" placeholder="e.g., HR, Sales, IT" required>
-
-      <label>Salary</label>
-      <input type="number" step="0.01" name="salary" required>
-
-      <input type="submit" value="Save Employee">
+        <input type="submit" name="submit" value="Add Employee">
     </form>
-  </div>
 
-  <!-- RIGHT: DISPLAY TABLE -->
-  <div>
-    <h3>All Employees</h3>
-    <table>
-      <tr>
-        <th>#</th>
-        <th>EmpID</th>
-        <th>Name</th>
-        <th>Dept</th>
-        <th>Salary</th>
-        <th>Action</th>
-      </tr>
-      <?php if (!$list): ?>
-        <tr><td colspan="6">No employees yet.</td></tr>
-      <?php else: ?>
-        <?php foreach ($list as $row): ?>
-          <tr>
-            <td><?= $row['id'] ?></td>
-            <td><?= htmlspecialchars($row['emp_id']) ?></td>
-            <td><?= htmlspecialchars($row['name']) ?></td>
-            <td><?= htmlspecialchars($row['dept']) ?></td>
-            <td><?= number_format($row['salary'],2) ?></td>
-            <td><a class="btn" href="?delete=<?= $row['id'] ?>" onclick="return confirm('Delete this employee?')">Delete</a></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php endif; ?>
-    </table>
-  </div>
-</div>
+    <hr>
 
-<p style="margin-top:14px;font-size:13px;opacity:.8">
-Tip: Use the SQL shown above to create the database and table before opening this page.
-</p>
+    <h2>Employee Details</h2>
+    <?php
+    $result = $conn->query("SELECT * FROM employees");
 
+    if ($result->num_rows > 0) {
+        echo "<table border='1' cellpadding='8'>
+                <tr>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Salary</th>
+                </tr>";
+        while($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>{$row['emp_id']}</td>
+                    <td>{$row['name']}</td>
+                    <td>{$row['designation']}</td>
+                    <td>{$row['salary']}</td>
+                  </tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No employee records found.</p>";
+    }
+
+    $conn->close();
+    ?>
 </body>
 </html>
-
-
-CREATE DATABASE demo_company CHARACTER SET utf8mb4;
-USE demo_company;
-
-CREATE TABLE employees (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  emp_id VARCHAR(20) UNIQUE NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  dept VARCHAR(60) NOT NULL,
-  salary DECIMAL(10,2) NOT NULL
-);

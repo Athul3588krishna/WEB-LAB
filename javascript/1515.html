@@ -1,0 +1,608 @@
+<!-- 
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 32px;
+    }
+
+    table {
+      width: 50%;
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      text-transform: uppercase;
+      width: 220px;
+    }
+
+    input,
+    textarea {
+      width: 260px;
+      padding: 6px;
+      border: 1px solid #999;
+      box-sizing: border-box;
+    }
+
+    input[type=radio],
+    input[type=checkbox] {
+      width: auto;
+      margin-right: 4px;
+    }
+
+    .inner {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .inner th,
+    .inner td {
+      border: 1px solid #000;
+      padding: 6px;
+    }
+
+    .inner th {
+      background: #f4f4f4;
+    }
+
+    /* Red border when invalid, green when valid */
+    .invalid {
+      border: 2px solid #d93025 !important;
+      background: #fffafa;
+    }
+
+    .valid {
+      border: 2px solid #2e7d32 !important;
+      background: #f6fff7;
+    }
+
+    .msg {
+      font-size: 12px;
+      min-height: 14px;
+      margin-top: 2px;
+    }
+
+    .msg.error {
+      color: #d93025;
+    }
+
+    .msg.ok {
+      color: #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>STUDENT REGISTRATION FORM</h1>
+
+  <form id="regForm" novalidate>
+    <table>
+      <tr>
+        <th>FIRST NAME:</th>
+        <td>
+          <input type="text" name="fname" required pattern="[A-Za-z ]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>LAST NAME:</th>
+        <td>
+          <input type="text" name="lname" required pattern="[A-Za-z ]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>EMAIL ID:</th>
+        <td>
+          <input type="email" name="email" required placeholder="abc@gmail.com">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>DOB:</th>
+        <td>
+          <input type="date" name="dob" required>
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>MOBILE NUMBER:</th>
+        <td>
+          <input type="text" name="mobile" maxlength="10" required placeholder="1234567890"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>GENDER:</th>
+        <td>
+          <label><input type="radio" name="gender" required> Male</label>
+          <label><input type="radio" name="gender"> Female</label>
+        </td>
+      </tr>
+
+      <tr>
+        <th>ADDRESS:</th>
+        <td>
+          <textarea name="addr" rows="2" required></textarea>
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>CITY:</th>
+        <td>
+          <input type="text" name="city" maxlength="30" required pattern="[A-Za-z ]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>PIN CODE:</th>
+        <td>
+          <input type="text" name="pin" maxlength="6" required placeholder="6 digits"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>STATE:</th>
+        <td>
+          <input type="text" name="state" required pattern="[A-Za-z ]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>COUNTRY:</th>
+        <td>
+          <input type="text" name="country" value="India" required pattern="[A-Za-z ]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>QUALIFICATION:</th>
+        <td>
+          <table class="inner">
+            <tr>
+              <th>SL NO</th>
+              <th>EXAM</th>
+              <th>BOARD</th>
+              <th>PERCENTAGE</th>
+              <th>YEAR</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Class X</td>
+              <td><input type="text" required pattern="[A-Za-z ]+">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                <div class="msg"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Class XII</td>
+              <td><input type="text" required pattern="[A-Za-z ]+">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                <div class="msg"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Degree</td>
+              <td><input type="text" required pattern="[A-Za-z ]+">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                <div class="msg"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Masters</td>
+              <td><input type="text" pattern="[A-Za-z ]+">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+                <div class="msg"></div>
+              </td>
+              <td><input type="text" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                <div class="msg"></div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <th>PASSWORD:</th>
+        <td><input type="password" name="pwd" required minlength="6" maxlength="30">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>USERNAME:</th>
+        <td><input type="text" name="uname" required minlength="3" maxlength="10" pattern="[A-Za-z0-9]+">
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>DATE OF TC:</th>
+        <td><input type="date" name="tc_date" required>
+          <div class="msg"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">SUBMIT</button>
+          <button type="reset">RESET</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    document.querySelectorAll('input, textarea').forEach(inp => {
+      const msg = inp.parentElement.querySelector('.msg');
+      inp.addEventListener('input', () => {
+        if (inp.checkValidity()) {
+          inp.classList.add('valid'); inp.classList.remove('invalid');
+          if (msg) { msg.textContent = '✔ Looks good'; msg.className = 'msg ok'; }
+        } else {
+          inp.classList.add('invalid'); inp.classList.remove('valid');
+          if (msg) {
+            let text = '❌ Invalid input';
+            if (inp.type === 'email') text = 'Enter a valid email address';
+            else if (inp.name === 'mobile') text = 'Enter 10 digits only';
+            else if (inp.name === 'pin') text = 'Enter 6 digits only';
+            else if (inp.pattern && inp.pattern.includes('[A-Za-z')) text = 'Letters only';
+            else if (inp.type === 'password') text = 'At least 6 characters';
+            msg.textContent = text;
+            msg.className = 'msg error';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html> -->
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Student Registration (Simple Validation)</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;padding:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;text-align:left;border:1px solid #000;vertical-align:top}
+  input,textarea,select{width:260px;padding:6px;box-sizing:border-box}
+  input[type=radio]{width:auto;margin-right:6px}
+  .msg{font-size:12px;min-height:14px;margin-top:4px}
+  .msg.error{color:#d93025}
+  .msg.ok{color:#2e7d32}
+  .valid{border:2px solid #2e7d32;background:#f6fff7}
+  .invalid{border:2px solid #d93025;background:#fffafa}
+  .hint{font-size:12px;color:#666}
+  .actions{display:flex;gap:10px;align-items:center}
+  button[disabled]{opacity:.6;cursor:not-allowed}
+  .inner th{background:#f4f4f4}
+</style>
+</head>
+<body>
+  <h1>STUDENT REGISTRATION FORM</h1>
+
+  <form id="form" novalidate>
+    <table>
+      <!-- personal -->
+      <tr><th>FIRST NAME:</th>
+        <td>
+          <input data-validate="name" name="fname" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>LAST NAME:</th>
+        <td>
+          <input data-validate="name" name="lname" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>EMAIL ID:</th>
+        <td>
+          <input data-validate="email" name="email" required placeholder="abc@gmail.com">
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>DOB:</th>
+        <td><input data-validate="pastDate" type="date" name="dob" required>
+            <div class="msg"></div></td></tr>
+
+      <tr><th>MOBILE NUMBER:</th>
+        <td>
+          <input data-validate="mobile" name="mobile" maxlength="10" inputmode="numeric"
+                 placeholder="10-digit Indian number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>GENDER:</th>
+        <td>
+          <label><input type="radio" name="gender" value="Male" required> Male</label>
+          <label><input type="radio" name="gender" value="Female"> Female</label>
+          <div class="msg" id="genderMsg"></div>
+        </td></tr>
+
+      <tr><th>ADDRESS:</th>
+        <td>
+          <textarea data-validate="min5" name="addr" rows="2" required></textarea>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>CITY:</th>
+        <td>
+          <input data-validate="name" name="city" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>PIN CODE:</th>
+        <td>
+          <input data-validate="pin" name="pin" maxlength="6" inputmode="numeric" required
+                 placeholder="6 digits" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>STATE:</th>
+        <td>
+          <input data-validate="name" name="state" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>COUNTRY:</th>
+        <td>
+          <input data-validate="name" name="country" value="India" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <!-- qualification compacted -->
+      <tr><th>QUALIFICATION:</th>
+        <td>
+          <table class="inner" id="qual">
+            <tr><th>SL</th><th>EXAM</th><th>BOARD</th><th>%</th><th>YEAR</th></tr>
+            <!-- use data-role to identify validation types -->
+            <tr>
+              <td>1</td><td>Class X</td>
+              <td><input data-validate="board" required></td>
+              <td><input data-validate="percent" required placeholder="0-100" oninput="this.value=this.value.replace(/[^0-9.]/g,'')"></td>
+              <td><input data-validate="year" maxlength="4" required oninput="this.value=this.value.replace(/[^0-9]/g,'')"></td>
+            </tr>
+            <tr>
+              <td>2</td><td>Class XII</td>
+              <td><input data-validate="board" required></td>
+              <td><input data-validate="percent" required placeholder="0-100" oninput="this.value=this.value.replace(/[^0-9.]/g,'')"></td>
+              <td><input data-validate="year" maxlength="4" required oninput="this.value=this.value.replace(/[^0-9]/g,'')"></td>
+            </tr>
+            <tr>
+              <td>3</td><td>Degree</td>
+              <td><input data-validate="board" required></td>
+              <td><input data-validate="percent" required placeholder="0-100" oninput="this.value=this.value.replace(/[^0-9.]/g,'')"></td>
+              <td><input data-validate="year" maxlength="4" required oninput="this.value=this.value.replace(/[^0-9]/g,'')"></td>
+            </tr>
+            <tr>
+              <td>4</td><td>Masters</td>
+              <td><input data-validate="board"></td>
+              <td><input data-validate="percent" oninput="this.value=this.value.replace(/[^0-9.]/g,'')"></td>
+              <td><input data-validate="year" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></td>
+            </tr>
+          </table>
+        </td></tr>
+
+      <tr><th>PASSWORD:</th>
+        <td>
+          <input data-validate="password" type="password" name="pwd" required placeholder="Min 8 chars with Aa1@">
+          <div class="msg"></div>
+          <div class="hint">Include uppercase, lowercase, digit, special char. 8–30 chars.</div>
+        </td></tr>
+
+      <tr><th>USERNAME:</th>
+        <td>
+          <input data-validate="username" name="uname" required placeholder="3–10 letters/digits">
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><th>DATE OF TC:</th>
+        <td>
+          <input data-validate="pastDate" type="date" name="tc_date" required>
+          <div class="msg"></div>
+        </td></tr>
+
+      <tr><td></td>
+        <td class="actions">
+          <button id="submit" disabled>SUBMIT</button>
+          <button type="reset" id="reset">RESET</button>
+          <span class="hint" id="hint">Fill all fields correctly to enable Submit.</span>
+        </td></tr>
+    </table>
+  </form>
+
+<script>
+(() => {
+  const form = document.getElementById('form');
+  const submit = document.getElementById('submit');
+  const hint = document.getElementById('hint');
+  const today = new Date().toISOString().split('T')[0];
+
+  // set max for dates so browser datepickers don't allow future dates
+  Array.from(form.querySelectorAll('input[type=date]')).forEach(i => i.max = today);
+
+  // validation map
+  const validators = {
+    name: v => /^[A-Za-z ]{2,}$/.test((v||'').trim()),
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||''),
+    mobile: v => /^[6-9]\d{9}$/.test(v||''),
+    pin: v => /^\d{6}$/.test(v||''),
+    percent: v => {
+      if (!/^\d{1,3}(\.\d{1,2})?$/.test(v||'')) return false;
+      const n = parseFloat(v); return n >= 0 && n <= 100;
+    },
+    year: v => /^\d{4}$/.test(v) && +v >= 1900 && +v <= (new Date()).getFullYear(),
+    pastDate: v => !!v && v <= today,
+    board: v => /^[A-Za-z ]{1,}$/.test((v||'').trim()),
+    min5: v => (v||'').trim().length >= 5,
+    password: v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,30}$/.test(v||''),
+    username: v => /^[A-Za-z0-9]{3,10}$/.test(v||'')
+  };
+
+  function setMsg(el, ok, text) {
+    const msg = el.parentElement.querySelector('.msg');
+    if (msg) {
+      msg.textContent = text || (ok ? '✔ Looks good' : '❌ Invalid');
+      msg.className = 'msg ' + (ok ? 'ok' : 'error');
+    }
+    el.classList.toggle('valid', !!ok);
+    el.classList.toggle('invalid', !ok);
+  }
+
+  // validate single element using data-validate or name
+  function validateEl(el) {
+    const key = el.dataset.validate || el.name;
+    const val = (el.value || '').trim();
+    if (el.required && !val) { setMsg(el, false, 'This field is required'); return false; }
+    if (key && validators[key]) {
+      const ok = validators[key](val);
+      setMsg(el, ok, ok ? '✔ Looks good' : getMessageFor(key));
+      return ok;
+    }
+    // fallback to built-in validity
+    const ok = el.checkValidity();
+    setMsg(el, ok);
+    return ok;
+  }
+
+  function getMessageFor(key){
+    const map = {
+      name: 'Letters only (min 2)',
+      email: 'Enter valid email',
+      mobile: '10 digits, starts 6-9',
+      pin: '6 digits',
+      percent: '0–100 (max 2 decimals)',
+      year: '4-digit year (1900–current)',
+      pastDate: 'Date cannot be in the future',
+      board: 'Letters only',
+      min5: 'Enter at least 5 chars',
+      password: 'Use uppercase, lowercase, digit and special char (8–30)',
+      username: '3–10 letters/digits, no spaces'
+    };
+    return map[key] || 'Invalid';
+  }
+
+  // validate gender separately
+  function validateGender(){
+    const any = !!form.querySelector('input[name=gender]:checked');
+    const gm = document.getElementById('genderMsg');
+    gm.textContent = any ? '✔ Looks good' : 'Please select gender';
+    gm.className = 'msg ' + (any ? 'ok' : 'error');
+    return any;
+  }
+
+  // validate whole form
+  function formValid(){
+    const elems = Array.from(form.querySelectorAll('input,textarea')).filter(e => e.type !== 'radio');
+    const allOk = elems.every(el => validateEl(el));
+    return allOk && validateGender();
+  }
+
+  // event delegation for inputs
+  form.addEventListener('input', e => {
+    const target = e.target;
+    if (target.matches('input,textarea')) {
+      // immediate small validation for a few types (mobile/pin) can be done by input attributes; main validate runs below
+      validateEl(target);
+      submit.disabled = !formValid();
+      hint.textContent = submit.disabled ? 'Fill all fields correctly to enable Submit.' : '✅ Ready to submit';
+    }
+  });
+
+  // also validate on blur (gives nicer messages)
+  form.addEventListener('blur', e => {
+    if (e.target.matches('input,textarea')) validateEl(e.target);
+  }, true);
+
+  // radio change
+  form.addEventListener('change', e => {
+    if (e.target.name === 'gender') {
+      validateGender();
+      submit.disabled = !formValid();
+    }
+  });
+
+  // initial run: mark empty but set button
+  window.addEventListener('load', () => { submit.disabled = !formValid(); });
+
+  // submit handler
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!formValid()) {
+      alert('Please fix errors before submitting ❌');
+      submit.disabled = true;
+      return;
+    }
+    alert('Form submitted successfully ✅');
+    // do real submit here (AJAX or normal) if needed
+  });
+
+  // reset: clear styles and messages
+  form.addEventListener('reset', () => {
+    setTimeout(() => {
+      Array.from(form.querySelectorAll('.msg')).forEach(m => m.textContent = '');
+      Array.from(form.querySelectorAll('input,textarea')).forEach(i => i.classList.remove('valid','invalid'));
+      document.getElementById('genderMsg').textContent = '';
+      submit.disabled = !formValid();
+      hint.textContent = 'Fill all fields correctly to enable Submit.';
+    }, 0);
+  });
+
+})();
+</script>
+</body>
+</html>

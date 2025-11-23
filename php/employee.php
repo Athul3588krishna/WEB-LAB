@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";     // default username
 $password = "";         // default password
-$dbname = "employee";
+$dbname = "company";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -21,11 +21,11 @@ if (isset($_POST['submit'])) {
     $salary = $_POST['salary'];
 
     // Check if emp_id already exists
-    $check = $conn->query("SELECT * FROM employeess WHERE emp_id = '$emp_id'");
+    $check = $conn->query("SELECT * FROM employees WHERE emp_id = '$emp_id'");
     if ($check->num_rows > 0) {
         echo "<p style='color:red;'>Employee ID already exists! Please use a different ID.</p>";
     } else {
-        $sql = "INSERT INTO employeess (emp_id, name, designation, salary)
+        $sql = "INSERT INTO employees (emp_id, name, designation, salary)
                 VALUES ('$emp_id', '$name', '$designation', '$salary')";
 
         if ($conn->query($sql) === TRUE) {

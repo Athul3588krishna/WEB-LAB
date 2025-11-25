@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Simple Student Registration</title>
+    <style>
+
+    </style>
+    </head>
+<body>
+    <h2>Student Registration Form</h2>
+<form id="regForm">
+    <label>Full Name:</label>
+    <input type="text" id="name">
+    <div id="nameErr" class="error">Name is required</div>
+    <label>Email:</label>
+    <input type="text" id="email">
+    <div id="emailErr" class="error">Email is required</div>
+
+</form>
+<script>
+    const form=document.getElementById("regForm");
+    form.addEventListener("submit",function(e){
+        e.preventDefault();
+        let valid=true;
+        const fields=["name","email","phone","course"];
+        fields.forEach(function(id){
+            const input=document.getElementById(id);
+            const error=document.getElementById(id+"Err");
+            if(input.value.trim()===""){
+                error.style.display="block";
+                input.classList.add("invalid");
+                valid=false;
+            }else{
+                error.style.display="none";
+                input.classList.remove("invalid");
+            }
+        })
+    })
+</script>
+
+</body>
+
+</html>

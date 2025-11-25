@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Student Registration</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input {
+      width: 250px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      display: none;
+    }
+    .invalid {
+      border: 1px solid red;
+      background: #ffecec;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form id="regForm">
+
+  <label>Full Name:</label>
+  <input type="text" id="name">
+  <div id="nameErr" class="error">Name is required</div>
+
+  <label>Email:</label>
+  <input type="text" id="email">
+  <div id="emailErr" class="error">Email is required</div>
+
+  <label>Phone:</label>
+  <input type="text" id="phone">
+  <div id="phoneErr" class="error">Phone is required</div>
+
+  <label>Course:</label>
+  <input type="text" id="course">
+  <div id="courseErr" class="error">Course is required</div>
+
+  <br><br>
+  <button type="submit">Submit</button>
+
+</form>
+
+<script>
+  const form = document.getElementById("regForm");
+
+  form.addEventListener("submit", function(e) {
+    // stop form submit first
+    e.preventDefault();
+
+    let valid = true;
+
+    // list of input ids
+    const fields = ["name", "email", "phone", "course"];
+
+    fields.forEach(function(id) {
+      const input = document.getElementById(id);
+      const error = document.getElementById(id + "Err");
+
+      if (input.value.trim() === "") {
+        error.style.display = "block";
+        input.classList.add("invalid");
+        valid = false;
+      } else {
+        error.style.display = "none";
+        input.classList.remove("invalid");
+      }
+    });
+
+    if (valid) {
+      alert("Form submitted successfully!");
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>

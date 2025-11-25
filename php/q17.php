@@ -24,3 +24,10 @@ echo "Factorial of $num is: $fact";
 
 </body>
 </html>
+
+<?php
+$num=&_POST['num'];
+$fact=1;
+for($i=1;$i<=$num;$i++){
+    $fact=$fact*$i;
+}
